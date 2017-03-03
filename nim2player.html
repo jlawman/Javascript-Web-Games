@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--<link rel="stylesheet" type="text/css" href="mainStyles.css">-->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <script src="sweetalert/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="sweetalert/sweetalert.css">
+</head>
+
+<body>
+  <div class="container">
+<div class="page-header">
+<h1> Nim Game </h1>
+</div>
+</div>
+
+<div class="container">
+<div class="jumbotron">
+<h2 class="text-center">Instructions</h2>
+<p>Two players take turns removing 1-3 sticks from the pile of sticks. The goal of the game is to avoid taking the last stick.</p>
+</div>
+</div>
+
+<div class="container">
+<div class="jumbotron">
+<h2 class="text-center page-header">Game</h2>
+<p id="sticks"></p>
+
+<p id="playerText">Player 1:</p>
+<p id="instructions"> How many sticks would you like to remove?</p>
+<div>
+<input type=number id="removeChoice" class="form-control" style="max-width: 380px;" min="1" max="3">
+</div>
+<p id="winner"></p>
+<button type="button" id="removeButton" class="btn btn-lg">Remove</button>
+
+</div>
+
+<script>
+
+var currentPlayer=1;
+var numberOfSticks=10;
+var stickGraphic="";
+updateStickGraphic()
+document.getElementById("sticks").innerHTML=numberOfSticks + " sticks remain: " + stickGraphic;
+document.getElementById("winner").innerHTML="";
+document.getElementById("removeButton").setAttribute("onclick","removeNumber()");
+
+
+function sweetAlertNumberOfSticks(){
+  swal({
+title: "How many sticks should there be in the new pile?",
+text: "...",
+type: "input",
+showCancelButton: false,
+closeOnConfirm: false,
+animation: "slide-from-top",
+inputPlaceholder: "Number"
+},
+  function(inputValue){
+  if (inputValue === false) return false;
+
+  if (inputValue === "") {
+  swal.showInputError("You need to pick a number.");
+  return false}
+
+  if (isNaN(Number(inputValue))){
+    swal.showInputError("You need to pick a number.");
+    return false
+  }
+
+  if (Number(inputValue)<1){
+    swal.showInputError("You need to pick a number greater than 0!");
+    return false
+  }
+  swal("Got it. Good luck!", "", "success");
+  numberOfSticks=Number(inputValue);
+  updateStickGraphic();
+  }
+
+  /*if (inputValue < 1) {
+  swal.showInputError("You need to pick a number greater than 0!");
+  return false}*/
+);
+}
+
+function restartGame(){
+  currentPlayer=1;
+  sweetAlertNumberOfSticks()
+  //numberOfSticks=prompt("How many sticks should be in the original pile?");
+  //while(numberOfSticks<1){
+  //  numberOfSticks=prompt("How many sticks should be in the original pile? (Please select a positive number.)");
+  //}
+  //numberOfSticks=Number(numberOfSticks);
+  numberOfSticks=10;
+  updateStickGraphic();
+  document.getElementById("sticks").innerHTML=numberOfSticks + " sticks remain: " + stickGraphic;
+  document.getElementById("winner").innerHTML="";
+  document.getElementById("removeButton").setAttribute("onclick","removeNumber()");
+  document.getElementById("removeButton").innerHTML="Remove";
+  document.getElementById("playerText").innerHTML="Player " + currentPlayer + ": ";
+  document.getElementById("instructions").innerHTML="How many sticks would you like to remove?";
+  document.getElementById("removeChoice").type="number";
+}
+
+function updateStickGraphic(){
+    stickGraphic="";
+    for(i=0; i<numberOfSticks; i++){
+      stickGraphic=stickGraphic+"| "
+    }
+    document.getElementById("sticks").innerHTML=numberOfSticks + " sticks remain: " + stickGraphic;
+}
+
+function removeNumber(){
+  var numberToRemove=document.getElementById("removeChoice").value;
+  if (numberToRemove>3 || numberToRemove<1){
+      swal("Please select between 1 and 3 sticks.");
+    }
+  else if (numberToRemove>numberOfSticks){
+    swal("You can't remove more than the number of sticks that remain.");
+  }
+  else{
+  numberOfSticks=numberOfSticks-numberToRemove;
+  updateStickGraphic();
+  document.getElementById("sticks").innerHTML=numberOfSticks + " sticks remain: " + stickGraphic;
+  updatePlayer();
+
+}
+  if (numberOfSticks==0){
+    document.getElementById("winner").innerHTML="The winner is player "+currentPlayer +"."
+    document.getElementById("removeButton").innerHTML="Play Again";
+    document.getElementById("playerText").innerHTML="";
+    document.getElementById("instructions").innerHTML="";
+    document.getElementById("removeButton").setAttribute("onclick","restartGame()");
+    document.getElementById("removeChoice").type="hidden";
+  }
+}
+
+
+function updatePlayer(){
+  currentPlayer=(currentPlayer%2)+1;
+  document.getElementById("playerText").innerHTML="Player " + currentPlayer + ":";
+}
+</script>
+</div>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="js/bootstrap.min.js"></script>
+
+</body>
+</html>

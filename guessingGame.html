@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--<link rel="stylesheet" type="text/css" href="mainStyles.css">-->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+<div class="container">
+<div class="page-header">
+  <h1>Guessing Game</h1>
+</div>
+</div>
+<div class="container">
+  <div class="jumbotron">
+    <div class="text-center">
+
+    <h2><br></h2>
+    <h1 id="solution">Guess a number...</h1>
+    <h2><br></h2>
+    <p id="winrate"></p>
+    <button type="button" onclick="button1()" id="button1" class="btn btn-primary btn-lg">1</button>
+    <button type="button" onclick="button2()" id="button2" class="btn btn-primary btn-lg">2</button>
+    <button type="button" onclick="button3()" id="button3" class="btn btn-primary btn-lg">3</button>
+</div>
+  </div>
+</div>
+
+<script>
+var number;
+var numberOfGuesses=0;
+var numberCorrect=0;
+
+function button1(){
+  guess(1);
+}
+
+function button2(){
+  guess(2);
+}
+
+function button3(){
+  guess(3);
+}
+
+function restartGame(){
+  document.getElementById("solution").innerHTML="Guess a number...";
+  document.getElementById("button1").disabled=false;
+  document.getElementById("button2").disabled=false;
+  document.getElementById("button3").disabled=false;
+}
+
+function guess(theirGuess){
+  numberOfGuesses++;
+  number=Math.floor((Math.random()*3)+1);
+  if(theirGuess==number){
+    document.getElementById("solution").innerHTML="Congratulations! It was number " + number + ".";
+  //  setTimeout(restartGame(), 10000);
+    numberCorrect++;
+  }
+  else {
+    document.getElementById("solution").innerHTML="Sadly it was number " + number + ".";
+
+  }
+  //window.setTimeout(restartGame(), 10000);
+  document.getElementById("winrate").innerHTML="You've guessed " + numberCorrect + " correctly out of " + numberOfGuesses + " of guesses. (" + (100*numberCorrect/numberOfGuesses).toFixed(2) + "%)";
+  document.getElementById("button1").disabled=true;
+  document.getElementById("button2").disabled=true;
+  document.getElementById("button3").disabled=true;
+  setTimeout(function(){
+restartGame()
+    //document.getElementById("solution").innerHTML="Guess a number...";
+
+}, 1400);
+}
+
+function countUp(){
+  counter++
+document.getElementById("counter").innerHTML=counter;
+}
+
+</script>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="js/bootstrap.min.js"></script>
+
+</body>
+</html>

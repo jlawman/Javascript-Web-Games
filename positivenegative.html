@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--<link rel="stylesheet" type="text/css" href="mainStyles.css">-->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <script type="text/javascript" src="jquery-3.1.1.min.js"></script>
+</head>
+
+<body>
+<div class="container">
+<div class="page-header">
+  <h1>Positive Negative </h1>
+</div>
+</div>
+<div class="container">
+  <div class="jumbotron">
+    <div class="text-center">
+    <h1 id="counter"> - </h1>
+    <h2><br></h2>
+    <button type="button" id="negative" onclick="countDown()" class="btn btn-primary btn-lg">-</button>
+    <button type="button" id="positive" onclick="countUp()" class="btn btn-primary btn-lg">+</button>
+    <p id="responseP"></p>
+
+</div>
+  </div>
+
+</div>
+
+<script>
+
+var counter=0;
+
+$(document).ready(function(){
+          // alert('test');
+
+          $.post( "getPositiveNegativeNumber.php",
+          {blankNumber: "0"},
+            function( myNewData ) {
+              //alert( "Load was performed." );
+            //$('#counter').text(myNewData.body);
+             //$('#counter').text(blankNumber);
+             getBodyText(myNewData);
+
+          });
+
+        window.setInterval(function(){
+          /// call your function here
+          $.post( "getPositiveNegativeNumber.php",
+          {blankNumber: "0"},
+            function( myNewData ) {
+              //alert( "Load was performed." );
+            //$('#counter').text(myNewData.body);
+             //$('#counter').text(blankNumber);
+             getBodyText(myNewData);
+
+          });
+        }, 5000);
+
+
+
+
+
+           //$('#counter').html(counter));
+
+
+
+           $('#positive').click(function(){
+              //  document.getElementById("responseP").innerHTML="Got here.";
+              /*  $.post("updatePositive.php");
+                $.post("speak.php",
+                {
+                    name: "Donald Duck",
+                    score: "0"
+                });*/
+                $.post("updatePositive.php",
+                {
+                    score: counter
+                });
+                /*$.ajax({
+                      type: "POST",
+                      url: "speak.php",
+                      data: name="dave",
+                      success: function(msg){
+                       document.getElementById("responseP").innerHTML = "Updated."                         }
+                    })*/
+           });
+       $('#negative').click(function(){
+            //document.getElementById("responseP").innerHTML="Got here.";
+            $.post("updateNegative.php",
+            {
+                score: counter
+            });
+       });
+   });
+
+//$("#counter").hide();
+
+function getBodyText(myNewData){
+  //alert("Function ran");
+  document.getElementById("counter").innerHTML=myNewData;//.getElementById("test").innerHTML;
+  counter=Number(document.getElementById("counter").textContent);
+}
+
+function countDown(){
+  counter--;
+  document.getElementById("counter").innerHTML=counter;
+  document.getElementById("submitScore").value=counter;
+  document.getElementById("submitButton").hidden=false;
+}
+
+function countUp(){
+  counter++;
+document.getElementById("counter").innerHTML=counter;
+document.getElementById("submitScore").value=counter;
+document.getElementById("submitButton").hidden=false;
+}
+
+</script>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="js/bootstrap.min.js"></script>
+
+</body>
+</html>
