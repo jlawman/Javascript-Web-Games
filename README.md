@@ -1,5 +1,5 @@
 # Javascript-Web-Games
-Some small games (nim, guessing, etc.) to practice javascript, HTML, CSS, and mySQL.
+Some small games (nim, guessing, etc.) to practice javascript, HTML, CSS, and mySQL. Featured on http://jlawman.com/.
 
 Requires bootstrap (https://getbootstrap.com/) and sweet alert (https://t4t5.github.io/sweetalert/). 
 
