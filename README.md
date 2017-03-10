@@ -3,4 +3,4 @@ Some small games (nim, guessing, etc.) to practice javascript, HTML, CSS, and my
 
 Requires bootstrap (https://getbootstrap.com/) and sweet alert (https://t4t5.github.io/sweetalert/). 
 
-Note, the PHP files have been kept private due to their inclusion of mySQL passwords.
+Note, the PHP files have been kept private due to their inclusion of MySQL passwords.
